@@ -20,12 +20,13 @@ class MainActivity : ComponentActivity(), MessageCallback {
 
     private val serverUri = "tcp://142.128.4.1:1883"
     private val clientId = "AndroidClient123753"
-    private val topics = listOf("stepper/cmd","can_vel/cmd")
+    private val topics = listOf("stepper/cmd","odom/linear", "odom/angular")
 
     var linearX : String by mutableStateOf("123")
     var angularZ : String by mutableStateOf("3")
     var nGrooves : String by mutableStateOf("4")
     var stepperPitch : String by mutableStateOf("2")
+    var text : String by mutableStateOf("2")
 
     private lateinit var manager: MqttManager
     private var chatMessages by mutableStateOf(emptyList<String>())
@@ -50,13 +51,17 @@ class MainActivity : ComponentActivity(), MessageCallback {
 
     override fun onMessageReceived(topic : String, message: String) {
 
-        if (topic == "stepper/cmd"){
-            linearX = message
+        text = message
+        if (topic == "odom/linear"){
+
+            linearX = String.format("%.3f",message.toFloat())
+
         }
-        else if (topic == "drive/cmd"){
-            angularZ = message
+        else if (topic == "odom/angular"){
+
+            angularZ = String.format("%.3f",message.toFloat())
         }
-        else if (topic == "cmd/vel3"){
+        else if (topic == "can_vel/primitive2"){
             nGrooves = message
         }
         else if (topic == "cmd/vel4"){

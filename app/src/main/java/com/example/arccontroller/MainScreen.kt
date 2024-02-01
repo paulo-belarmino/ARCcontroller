@@ -137,7 +137,7 @@ fun ExtraCmds(pubFun: (String, String) -> Unit,
             )
         }
         MySliderDemo("Fahren","max_fahren",pubFun)
-        MySliderDemo("Lenken","max_lenken",pubFun)
+        MySlider("Lenken","max_lenken",pubFun)
         AxleCmd(pubFun)
     }
 }
@@ -169,17 +169,17 @@ fun AxleCmd(pubFun: (String, String) -> Unit,
             )
             CustomButton(modifier = Modifier.width(100.dp),
                 text = "UP",
-                topic = "front_axle/cmd",
-                message = "LIFTING",
-                messageOnPress = "HOLD",
+                topic = "set_axle/front",
+                message = "HOLD",
+                messageOnPress = "LIFTING",
                 onClick = pubFun
 
             )
             CustomButton(modifier = Modifier.width(100.dp),
                 text = "DOWN",
-                topic = "front_axle/cmd",
-                message = "LOWERING",
-                messageOnPress = "HOLD",
+                topic = "set_axle/front",
+                message = "HOLD",
+                messageOnPress = "LOWERING",
                 onClick = pubFun
             )
         }
@@ -198,16 +198,16 @@ fun AxleCmd(pubFun: (String, String) -> Unit,
             )
             CustomButton(modifier = Modifier.width(100.dp),
                 text = "UP",
-                topic = "rear_axle/cmd",
-                message = "LIFTING",
-                messageOnPress = "HOLD",
+                topic = "set_axle/rear",
+                message = "HOLD",
+                messageOnPress = "LIFTING",
                 onClick = pubFun
             )
             CustomButton(modifier = Modifier.width(100.dp),
                 text = "DOWN",
-                topic = "rear_axle/cmd",
-                message = "LOWERING",
-                messageOnPress = "HOLD",
+                topic = "set_axle/rear",
+                message = "HOLD",
+                messageOnPress = "LOWERING",
                 onClick = pubFun
             )
         }
@@ -235,14 +235,25 @@ fun AxleCmd(pubFun: (String, String) -> Unit,
         }
     }
 }
-
 @Composable
 fun MySliderDemo(name: String,
                  topic: String,
                  pubFun: (String, String) -> Unit) {
     var sliderPosition by remember { mutableStateOf(0f)}
 
-    var maxValue  = (50 * sliderPosition).toInt().toString()
+    var maxValue  = (30 * sliderPosition).toInt().toString()
+    Text(text = name + ": " + maxValue)
+    Slider(value = sliderPosition,
+        onValueChange = { sliderPosition = it },
+        onValueChangeFinished = {pubFun(topic,maxValue)})
+}
+@Composable
+fun MySlider(name: String,
+                 topic: String,
+                 pubFun: (String, String) -> Unit) {
+    var sliderPosition by remember { mutableStateOf(0f)}
+
+    var maxValue  = (30 * sliderPosition).toInt().toString()
     Text(text = name + ": " + maxValue)
     Slider(value = sliderPosition,
         onValueChange = { sliderPosition = it },

@@ -75,7 +75,18 @@ fun JoyStick(
 
             ) {
             drawCircle(Color.LightGray, radius = maxRadius, style = Stroke(width = 8.dp.toPx()))
-
+            drawLine(
+                start = Offset(x = (maxRadius * 0.293).toFloat(), y = (maxRadius * 0.293).toFloat()),
+                end = Offset(x = (1.707*maxRadius).toFloat(), y = (1.707*maxRadius).toFloat()),
+                color = Color.LightGray,
+                strokeWidth = 5.dp.toPx() // instead of 5.dp.toPx() , you can also pass 5f
+            )
+            drawLine(
+                start = Offset(x = (maxRadius * 0.293).toFloat(), y = (maxRadius * 1.707).toFloat()),
+                end = Offset(x = (1.707*maxRadius).toFloat(), y = (0.293*maxRadius).toFloat()),
+                color = Color.LightGray,
+                strokeWidth = 5.dp.toPx() // instead of 5.dp.toPx() , you can also pass 5f
+            )
         }
         Canvas(
             modifier = Modifier
