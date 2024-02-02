@@ -1,11 +1,13 @@
 package com.example.arccontroller
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,14 +32,12 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class SetInt{
 
-}
 @Composable
 fun JoyStick(
     size: Dp = 200.dp,
     dotSize: Dp = 50.dp,
-    moved: (x: Float, y: Float) -> Unit = {  _, _ -> },
+    moved: (x: Float, y: Float, radius: Float, theta: Float) -> Unit = {  _, _, _, _ -> },
     pubFun: (String, String) -> Unit,
     modifier: Modifier = Modifier,
 
@@ -66,8 +66,9 @@ fun JoyStick(
         fun onChangePos(x: Float,y: Float){
 
             val message : String = String.format("""{"fahren":  %.2f, "lenken":  %.2f}""",y,x)
-            moved(x,y)
+            moved(x,y,radius,theta)
             pubFun("can_vel/primitive",message)
+            //Log.d("debug",String.format("%.2f,%.2f,%.2f,%.2f",y,x,radius,theta))
         }
         Canvas(
             modifier = Modifier
