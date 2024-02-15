@@ -1,5 +1,6 @@
 package com.example.arccontroller
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -8,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffectResult
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,18 +23,21 @@ import kotlinx.serialization.json.Json
 
 class MainActivity : ComponentActivity(), MessageCallback {
 
+    val format = Json { encodeDefaults = true }
     private val serverUri = "tcp://142.128.4.1:1883"
     private val clientId = "AndroidClient123753"
-    private val topics = listOf("stepper/cmd","odom/linear", "odom/angular")
+    private val topics = listOf("stepper/front/pitch","odom/linear", "odom/angular","odom/x","odom/y")
     var appStatus = AppStatus()
     var linearX : String by mutableStateOf("-")
     var angularZ : String by mutableStateOf("-")
+    var pos_x : String by mutableStateOf("-")
+    var pos_y : String by mutableStateOf("-")
     var nGrooves : String by mutableStateOf("-")
     var stepperPitch : String by mutableStateOf("-")
     var log : String by mutableStateOf("Function Not yet Implemented")
 
 
-    private lateinit var manager: MqttManager
+    lateinit var manager: MqttManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,7 +50,8 @@ class MainActivity : ComponentActivity(), MessageCallback {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SetScreen(linearX,angularZ,nGrooves,stepperPitch,log,pubFun = ::updateStatus)
+                    SetScreen(linearX,angularZ,nGrooves,stepperPitch,pos_x,pos_y,log,
+                        uptStatus = ::updateStatus, pubFun = ::sendMessage)
                 }
 
             }
@@ -53,29 +60,39 @@ class MainActivity : ComponentActivity(), MessageCallback {
     override fun onMessageReceived(topic : String, message: String) {
 
         log = message
+        //Log.d(topic, message)
         if (message.isNotEmpty()) {
             log = log + "\n" + message
         }
         if (topic == "odom/linear"){
-
             linearX = String.format("%.3f",message.toFloat())
-
         }
         else if (topic == "odom/angular"){
-
             angularZ = String.format("%.3f",message.toFloat())
+        }
+        else if (topic == "odom/angular"){
+            pos_x = String.format("%.3f",message.toFloat())
+        }
+        else if (topic == "odom/angular"){
+            pos_y = String.format("%.3f",message.toFloat())
         }
         else if (topic == "can_vel/primitive2"){
             nGrooves = message
         }
-        else if (topic == "cmd/vel4"){
+        else if (topic == "stepper/front/pitch"){
             stepperPitch = message
         }
+        else if (topic == "app/reset"){
 
-        Log.d(topic,message)
+            //restartApplication()
+
+        }
+
+        //Log.d(topic,message)
     }
-    private fun updateStatus(topic: String, message: String){
 
+    private fun updateStatus(topic: String, message: String){
+        //Log.d(topic, message)
         if (topic == "fahren"){
 
             appStatus.fahren = message.toFloat()
@@ -98,31 +115,33 @@ class MainActivity : ComponentActivity(), MessageCallback {
         }
         else if (topic == "stepper"){
 
-            appStatus.stepper = message.toFloat()
+            appStatus.stepper = message
 
         }
         else if (topic == "honk"){
 
             appStatus.honk = message.toBoolean()
+            Log.d(topic,appStatus.honk.toString())
 
         }
         else if (topic == "light"){
 
-            appStatus.light = message.toBoolean()
+            appStatus.light = !appStatus.light
+            Log.d(topic,appStatus.light.toString())
 
         }
-        else if (topic == "front_lifting"){
+        else if (topic == "front_axle"){
 
             appStatus.front_axle = message
 
         }
-        else if (topic == "rear_lifting"){
+        else if (topic == "rear_axle"){
 
             appStatus.rear_axle = message
 
         }
 
-        val jsonString = Json.encodeToString(appStatus)
+        val jsonString = format.encodeToString(appStatus)
         sendMessage("app/status", jsonString)
 
     }
@@ -133,6 +152,12 @@ class MainActivity : ComponentActivity(), MessageCallback {
         }
     }
 
+    fun restartApplication() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
 }
 
 

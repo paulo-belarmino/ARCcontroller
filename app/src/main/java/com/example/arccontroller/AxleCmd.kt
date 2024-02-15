@@ -35,7 +35,8 @@ fun AxleCmd(name : String,
             text = name + " Axle:",
             fontWeight = FontWeight.Bold
         )
-        CustomButton(modifier = Modifier.padding(5.dp)
+        CustomButton(
+            modifier = Modifier.padding(5.dp)
             .fillMaxWidth(),
             text = "UP",
             topic = name + "_axle",
@@ -44,7 +45,8 @@ fun AxleCmd(name : String,
             onClick = onClick
 
         )
-        CustomButton(modifier = Modifier.padding(5.dp)
+        CustomButton(
+            modifier = Modifier.padding(5.dp)
             .fillMaxWidth(),
             text = "DOWN",
             topic = name + "_axle",

@@ -2,6 +2,9 @@ package com.example.arccontroller
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
@@ -103,7 +106,7 @@ class MqttManager(
             val mqttMessage = MqttMessage()
 
             mqttMessage.payload = message.toByteArray()
-            Log.d(topic,message)
+            //Log.d(topic,message)
             client.publish(topic, mqttMessage, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
                     // Message published success logic if needed

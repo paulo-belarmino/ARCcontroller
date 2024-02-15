@@ -17,13 +17,14 @@ fun CustomSlider(
     minValue: Float,
     maxValue: Float,
     initialValue: Float,
+    label: String = "",
     onValueChangeFinished: (Float) -> Unit
 ) {
     var sliderPosition by remember { mutableStateOf(initialValue) }
 
     var finalValue  = sliderPosition.toInt().toString()
 
-    Text(text = finalValue)
+    Text(text = label + finalValue)
     Slider(value = sliderPosition,
         onValueChange = { newValue -> sliderPosition = newValue },
         onValueChangeFinished = {onValueChangeFinished(sliderPosition)},

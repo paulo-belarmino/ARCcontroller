@@ -10,7 +10,7 @@ data class AppStatus(
     var fahren_max: Float = 0f,
     var lenken: Float = 0f,
     var lenken_max: Float = 0f,
-    var stepper: Float = 0f,
+    var stepper:  String = "HLD0",
     var honk: Boolean = false,
     var light: Boolean = false,
     var front_axle: String = "HOLD",
