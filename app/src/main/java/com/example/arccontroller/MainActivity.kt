@@ -2,17 +2,14 @@ package com.example.arccontroller
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffectResult
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,12 +23,13 @@ class MainActivity : ComponentActivity(), MessageCallback {
     val format = Json { encodeDefaults = true }
     private val serverUri = "tcp://142.128.4.1:1883"
     private val clientId = "AndroidClient123753"
-    private val topics = listOf("stepper/front/pitch","odom/linear", "odom/angular","odom/x","odom/y")
+    private val topics = listOf("stepper/front/pitch","odom/linear", "odom/angular","odom/x","odom/y","odom/yaw")
     var appStatus = AppStatus()
     var linearX : String by mutableStateOf("-")
     var angularZ : String by mutableStateOf("-")
     var pos_x : String by mutableStateOf("-")
     var pos_y : String by mutableStateOf("-")
+    var ori_yaw : String by mutableStateOf("-")
     var nGrooves : String by mutableStateOf("-")
     var stepperPitch : String by mutableStateOf("-")
     var log : String by mutableStateOf("Function Not yet Implemented")
@@ -50,7 +48,7 @@ class MainActivity : ComponentActivity(), MessageCallback {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SetScreen(linearX,angularZ,nGrooves,stepperPitch,pos_x,pos_y,log,
+                    SetScreen(linearX,angularZ,nGrooves,stepperPitch,pos_x,pos_y,ori_yaw,log,
                         uptStatus = ::updateStatus, pubFun = ::sendMessage)
                 }
 
@@ -59,22 +57,25 @@ class MainActivity : ComponentActivity(), MessageCallback {
     }
     override fun onMessageReceived(topic : String, message: String) {
 
-        log = message
+        //log = message
         //Log.d(topic, message)
-        if (message.isNotEmpty()) {
-            log = log + "\n" + message
-        }
+        //if (message.isNotEmpty()) {
+          //  log = log + "\n" + message
+        //}
         if (topic == "odom/linear"){
             linearX = String.format("%.3f",message.toFloat())
         }
         else if (topic == "odom/angular"){
             angularZ = String.format("%.3f",message.toFloat())
         }
-        else if (topic == "odom/angular"){
+        else if (topic == "odom/x"){
             pos_x = String.format("%.3f",message.toFloat())
         }
-        else if (topic == "odom/angular"){
+        else if (topic == "odom/y"){
             pos_y = String.format("%.3f",message.toFloat())
+        }
+        else if (topic == "odom/yaw"){
+            ori_yaw = String.format("%.3f",message.toFloat())
         }
         else if (topic == "can_vel/primitive2"){
             nGrooves = message
@@ -121,13 +122,11 @@ class MainActivity : ComponentActivity(), MessageCallback {
         else if (topic == "honk"){
 
             appStatus.honk = message.toBoolean()
-            Log.d(topic,appStatus.honk.toString())
 
         }
         else if (topic == "light"){
 
             appStatus.light = !appStatus.light
-            Log.d(topic,appStatus.light.toString())
 
         }
         else if (topic == "front_axle"){

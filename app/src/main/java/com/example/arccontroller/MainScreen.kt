@@ -1,6 +1,5 @@
 package com.example.arccontroller
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,10 +7,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +20,7 @@ fun SetScreen(linearX : String,
               stepperPitch : String,
               x_pos : String,
               y_pos : String,
+              ori_yaw : String,
               log : String,
               uptStatus: (String, String) -> Unit,
               pubFun: (String, String) -> Unit,
@@ -48,7 +44,7 @@ fun SetScreen(linearX : String,
         horizontalAlignment = Alignment.Start
     ) {
 
-        DataBar(linearX, angularZ, nGrooves, stepperPitch, x_pos,y_pos, modifier)
+        DataBar(linearX, angularZ, nGrooves, stepperPitch, x_pos,y_pos, ori_yaw, modifier)
 
         Row(
             modifier = Modifier,
@@ -74,6 +70,7 @@ fun DataBar(dataDisplay1 : String,
             dataDisplay4: String,
             dataDisplay5 : String,
             dataDisplay6: String,
+            dataDisplay7: String,
             modifier : Modifier = Modifier){
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -105,6 +102,10 @@ fun DataBar(dataDisplay1 : String,
         OutlinedTextFieldWithLabel(
             text = dataDisplay6,
             label = "Y"
+        )
+        OutlinedTextFieldWithLabel(
+            text = dataDisplay7,
+            label = "Yaw"
         )
 
     }
