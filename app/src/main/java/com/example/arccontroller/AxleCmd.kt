@@ -3,7 +3,6 @@ package com.example.arccontroller
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 fun AxleCmd(name : String,
             onClick: (String, String) -> Unit)
 {
-
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
