@@ -3,10 +3,8 @@ package com.example.arccontroller
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AxleCmd(name : String,
+fun ActionCmds(name : String,
             onClick: (String, String) -> Unit)
 {
 
@@ -27,31 +25,29 @@ fun AxleCmd(name : String,
         modifier = Modifier
             .padding(2.dp)
             .border(width = 3.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
-            .width(125.dp)
+            //.width(125.dp)
             //.fillMaxWidth(),
 
     ) {
         Text(modifier = Modifier.padding(2.dp),
-            text = name + " Axle:",
+            text = name,
             fontWeight = FontWeight.Bold
         )
         CustomButton(
             modifier = Modifier.padding(5.dp)
             .fillMaxWidth(),
-            text = "UP",
-            topic = name + "_axle",
-            message = "HOLD",
-            messageOnPress = "LIFTING",
+            text = "START",
+            topic = name ,
+            message = "START",
             onClick = onClick
 
         )
         CustomButton(
             modifier = Modifier.padding(5.dp)
             .fillMaxWidth(),
-            text = "DOWN",
-            topic = name + "_axle",
-            message = "HOLD",
-            messageOnPress = "LOWERING",
+            text = "STOP",
+            topic = name,
+            message = "STOP",
             onClick = onClick
         )
     }

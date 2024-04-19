@@ -1,6 +1,7 @@
 package com.example.arccontroller
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -57,8 +58,18 @@ fun SetScreen(linearX : String,
                 uptStatus = uptStatus,
                 modifier = Modifier.padding(10.dp)
             )
-            CentralComponents(log,uptStatus)
-            RightComponents(uptStatus)
+            Box(modifier = Modifier
+                .weight(1.5f))
+            {
+                CentralComponents(log,uptStatus)
+            }
+            Box(modifier = Modifier
+                .weight(1f))
+            {
+                RightComponents(uptStatus)
+            }
+
+
         }
     }
 

@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity(), MessageCallback {
         else if (topic == "odom/yaw"){
             ori_yaw = String.format("%.3f",message.toFloat())
         }
-        else if (topic == "can_vel/primitive2"){
+        else if (topic == "gd_detection/n_grooves"){
             nGrooves = message
         }
         else if (topic == "stepper/front/pitch"){
