@@ -78,6 +78,7 @@ class MainActivity : ComponentActivity(), MessageCallback {
             ori_yaw = String.format("%.3f",message.toFloat())
         }
         else if (topic == "gd_detection/n_grooves"){
+
             nGrooves = message
         }
         else if (topic == "stepper/front/pitch"){
@@ -137,6 +138,16 @@ class MainActivity : ComponentActivity(), MessageCallback {
         else if (topic == "rear_axle"){
 
             appStatus.rear_axle = message
+
+        }
+        else if (topic == "gd_detection/goal"){
+
+            appStatus.gd_detection = message
+
+        }
+        else if (topic == "rerail"){
+
+            appStatus.rerail = message
 
         }
 

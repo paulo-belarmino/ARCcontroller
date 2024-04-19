@@ -15,5 +15,7 @@ data class AppStatus(
     var light: Boolean = false,
     var front_axle: String = "HOLD",
     var rear_axle: String = "HOLD",
+    var gd_detection: String = "STOP",
+    var rerail: String = "STOP",
     // Add more properties as needed to represent the state of your UI
 )

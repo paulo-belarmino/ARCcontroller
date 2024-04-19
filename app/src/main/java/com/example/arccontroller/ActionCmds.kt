@@ -25,10 +25,8 @@ fun ActionCmds(name : String,
         modifier = Modifier
             .padding(2.dp)
             .border(width = 3.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
-            //.width(125.dp)
-            //.fillMaxWidth(),
-
-    ) {
+    )
+    {
         Text(modifier = Modifier.padding(2.dp),
             text = name,
             fontWeight = FontWeight.Bold
