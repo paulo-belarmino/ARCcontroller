@@ -140,7 +140,7 @@ class MainActivity : ComponentActivity(), MessageCallback {
             appStatus.rear_axle = message
 
         }
-        else if (topic == "gd_detection/goal"){
+        else if (topic == "gd_detection"){
 
             appStatus.gd_detection = message
 
