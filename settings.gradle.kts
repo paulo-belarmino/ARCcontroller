@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven( "https://repo.eclipse.org/content/repositories/paho-releases/")
+        maven( "https://jitpack.io")
     }
 }
 

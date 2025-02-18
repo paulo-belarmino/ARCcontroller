@@ -70,11 +70,15 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
-    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1"){
+    //implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    //implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1"){
 
-    }
-
-
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5" )// Original Mqtt dependency
+    //implementation("androidx.work:work-runtime:2.7.1") // WorkManager
+    //implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0") // Replace v4 & do not use 1.1.0
+    //implementation("com.github.QingHeYang:MqttFix:1.0.3-fix3")
+    implementation("com.github.hannesa2:paho.mqtt.android:3.3.5")
 }
+
+
 

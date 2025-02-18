@@ -2,6 +2,7 @@ package com.example.arccontroller
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -113,12 +114,13 @@ class MainActivity : ComponentActivity(), MessageCallback {
         else if (topic == "lenken_max"){
 
             appStatus.lenken_max = message.toFloat()
+            Log.d(topic,message)
 
         }
         else if (topic == "stepper"){
 
             appStatus.stepper = message
-
+            //Log.d(topic,message)
         }
         else if (topic == "honk"){
 

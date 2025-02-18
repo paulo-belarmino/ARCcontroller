@@ -2,10 +2,13 @@ package com.example.arccontroller
 
 import android.content.Context
 import android.util.Log
+import info.mqtt.android.service.Ack
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.eclipse.paho.android.service.MqttAndroidClient
+
+import info.mqtt.android.service.MqttAndroidClient;
+//import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.IMqttToken
@@ -24,7 +27,8 @@ class MqttManager(
     private val callback: MessageCallback // generate by the interface in MessageCallback file
 ) {
     private val persistence = MemoryPersistence()
-    val client = MqttAndroidClient(context, serverUri, clientId, persistence)
+    // val client = MqttAndroidClient(context, serverUri, clientId, persistence)
+    val client = MqttAndroidClient(context, serverUri, clientId, Ack.AUTO_ACK)
 
     init {
 
